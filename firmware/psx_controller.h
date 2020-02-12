@@ -4,6 +4,8 @@
 //constants
 #define PSX_DELAY_CLK_PRE_SAMPLE_US 9
 #define PSX_DELAY_CLK_POST_SAMPLE_US 1
+#define PSX_ATT_DELAY_US 10
+#define PSX_INTER_BYTE_DELAY_US 10
 
 //pin definitions
 #define PSX_ATT_DDR DDRC
@@ -33,7 +35,11 @@
 #define PSX_CLK_HIGH PSX_CLK_PORT |= (1 << PSX_CLK_BIT)
 #define PSX_ATT_LOW PSX_ATT_PORT &= ~(1 << PSX_ATT_BIT)
 #define PSX_ATT_HIGH PSX_ATT_PORT |= (1 << PSX_ATT_BIT)
+#define PSX_CMD_LOW PSX_CMD_PORT &= ~(1 << PSX_CMD_BIT)
+#define PSX_CMD_HIGH PSX_CMD_PORT |= (1 << PSX_CMD_BIT)
+#define PSX_READ_DATA ((PSX_DATA_PIN & (1 << PSX_DATA_BIT))?(1):(0))
 #define PSX_WAIT_ACK while(PSX_ACK_PIN & (1 << PSX_ACK_BIT))
+#define PSX_DELAY_US(x) _delay_us(x)
 
 //different types of controllers
 enum
@@ -47,6 +53,6 @@ enum
 //function declarations
 void PSX_PinsInit();
 __UINT8_TYPE__ PSX_TransRecieveByte(__UINT8_TYPE__ data);
-__UINT8_TYPE__ * PSX_TransRecieveBlock(__UINT8_TYPE__ * block, __UINT8_TYPE__ length);
+void PSX_TransRecieveBlock(__UINT8_TYPE__ * transmit_block, __UINT8_TYPE__ * recieve_block, __UINT8_TYPE__ length);
 
 #endif
