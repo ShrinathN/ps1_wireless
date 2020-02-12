@@ -30,7 +30,7 @@ U 1 1 5E43C370
 P 6500 1050
 F 0 "R2" H 6600 1050 50  0000 L CNN
 F 1 "220k" H 6600 950 50  0000 L CNN
-F 2 "" V 6430 1050 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 6430 1050 50  0001 C CNN
 F 3 "~" H 6500 1050 50  0001 C CNN
 	1    6500 1050
 	1    0    0    -1  
@@ -41,7 +41,7 @@ U 1 1 5E43D361
 P 6500 1350
 F 0 "R3" H 6600 1350 50  0000 L CNN
 F 1 "220k" H 6600 1250 50  0000 L CNN
-F 2 "" V 6430 1350 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 6430 1350 50  0001 C CNN
 F 3 "~" H 6500 1350 50  0001 C CNN
 	1    6500 1350
 	1    0    0    -1  
@@ -64,7 +64,7 @@ U 1 1 5E43E5CA
 P 3850 2050
 F 0 "R1" H 3600 2150 50  0000 L CNN
 F 1 "220k" H 3600 2050 50  0000 L CNN
-F 2 "" V 3780 2050 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 3780 2050 50  0001 C CNN
 F 3 "~" H 3850 2050 50  0001 C CNN
 	1    3850 2050
 	1    0    0    -1  
@@ -77,7 +77,7 @@ U 1 1 5E43FDC9
 P 7150 3700
 F 0 "J2" H 7178 3726 50  0000 L CNN
 F 1 "Conn_01x07_Female" H 7178 3635 50  0000 L CNN
-F 2 "" H 7150 3700 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical" H 7150 3700 50  0001 C CNN
 F 3 "~" H 7150 3700 50  0001 C CNN
 	1    7150 3700
 	1    0    0    -1  
@@ -166,28 +166,27 @@ Text Label 8750 2100 0    50   ~ 0
 3V3
 Text Label 4550 1900 1    50   ~ 0
 BATTERY_IN
-$Comp
-L Connector:Conn_01x06_Female J1
-U 1 1 5E4559E2
-P 6200 4800
-F 0 "J1" H 6228 4776 50  0000 L CNN
-F 1 "Conn_01x06_Female" H 6228 4685 50  0000 L CNN
-F 2 "" H 6200 4800 50  0001 C CNN
-F 3 "~" H 6200 4800 50  0001 C CNN
-	1    6200 4800
-	1    0    0    -1  
-$EndComp
-Text Label 6000 4600 2    50   ~ 0
-GND
-NoConn ~ 6000 4700
 Text Label 3850 2200 2    50   ~ 0
 AVR_RST
-Text Label 6000 4800 2    50   ~ 0
-AVR_RST
-Text Label 6000 4900 2    50   ~ 0
-NRF_SCK
-Text Label 6000 5000 2    50   ~ 0
-NRF_MISO
-Text Label 6000 5100 2    50   ~ 0
-NRF_MOSI
+Text Label 8200 1300 3    50   ~ 0
+GND
+Text Label 5050 3600 0    50   ~ 0
+AVR_RX
+Text Label 5050 3700 0    50   ~ 0
+AVR_TX
+$Comp
+L Connector_Generic:Conn_01x02 J1
+U 1 1 5E43D109
+P 5850 4300
+F 0 "J1" H 5930 4292 50  0000 L CNN
+F 1 "Conn_01x02" H 5930 4201 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x02_P3.81mm_Drill0.8mm" H 5850 4300 50  0001 C CNN
+F 3 "~" H 5850 4300 50  0001 C CNN
+	1    5850 4300
+	1    0    0    -1  
+$EndComp
+Text Label 5650 4400 3    50   ~ 0
+GND
+Text Label 5650 4300 2    50   ~ 0
+BATTERY_IN
 $EndSCHEMATC
