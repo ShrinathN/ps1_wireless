@@ -52,7 +52,7 @@ enum
 
 //function declarations
 void PSX_PinsInit();
-__UINT8_TYPE__ PSX_TransRecieveByte(__UINT8_TYPE__ data);
-void PSX_TransRecieveBlock(__UINT8_TYPE__ * transmit_block, __UINT8_TYPE__ * recieve_block, __UINT8_TYPE__ length);
+uint8_t PSX_TransRecieveByte(__UINT8_TYPE__ data);
+void PSX_TransRecieveBlock(uint8_t * transmit_block, uint8_t * recieve_block, uint8_t length);
 
 #endif

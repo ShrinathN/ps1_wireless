@@ -20,14 +20,14 @@ void PSX_PinsInit()
 	PSX_DATA_PORT |= (1 << PSX_DATA_BIT);
 }
 
-__UINT8_TYPE__ PSX_TransRecieveByte(__UINT8_TYPE__ data)
+uint8_t PSX_TransRecieveByte(uint8_t data)
 {
-	__UINT8_TYPE__ received_byte = 0;
+	uint8_t received_byte = 0;
 	//setting ATT low, thus starting session
 	PSX_ATT_LOW;
 	//waiting for mandatory ATT delay
 	PSX_DELAY_US(PSX_ATT_DELAY_US);
-	for(__UINT8_TYPE__ i = 0; i < 8; i++)
+	for(uint8_t i = 0; i < 8; i++)
 	{
 		//setting CMD line low or high according to data
 		(data & (1 << i)) ? PSX_CMD_HIGH : PSX_CMD_LOW;
@@ -49,18 +49,18 @@ __UINT8_TYPE__ PSX_TransRecieveByte(__UINT8_TYPE__ data)
 	PSX_DELAY_US(PSX_ATT_DELAY_US);
 }
 
-void PSX_TransRecieveBlock(__UINT8_TYPE__ * transmit_block, __UINT8_TYPE__ * recieve_block, __UINT8_TYPE__ length)
+void PSX_TransRecieveBlock(uint8_t * transmit_block, uint8_t * recieve_block, uint8_t length)
 {
-	__UINT8_TYPE__ byte_counter = 0;
+	uint8_t byte_counter = 0;
 
 	//setting ATT low, thus starting session
 	PSX_ATT_LOW;
 	//waiting for mandatory ATT delay
 	PSX_DELAY_US(PSX_ATT_DELAY_US);
 
-	for(__UINT8_TYPE__ byte_counter = 0; byte_counter < length; byte_counter++)
+	for(uint8_t byte_counter = 0; byte_counter < length; byte_counter++)
 	{
-		for(__UINT8_TYPE__ i = 0, recieve_block[byte_counter] = 0; i < 8; i++)
+		for(uint8_t i = 0, recieve_block[byte_counter] = 0; i < 8; i++)
 		{
 			//setting CMD line low or high according to data
 			(transmit_block[byte_counter] & (1 << i)) ? PSX_CMD_HIGH : PSX_CMD_LOW;
@@ -83,7 +83,7 @@ void PSX_TransRecieveBlock(__UINT8_TYPE__ * transmit_block, __UINT8_TYPE__ * rec
 	PSX_DELAY_US(PSX_ATT_DELAY_US);
 }
 
-__UINT8_TYPE__ PSX_GetControllerType()
+uint8_t PSX_GetControllerType()
 {
 	return PSX_TransRecieveByte(0x01);
 }
