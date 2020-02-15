@@ -1,11 +1,35 @@
-#define F_CPU 8000000UL
-#include <avr/io.h>
-#include <util/delay.h>
-#include <avr/eeprom.h>
-#include <avr/interrupt.h>
+#include "main.h"
+
+void uart_init()
+{
+	UCSRB |= (1 << TXEN);
+	UCSRC |= (1 << URSEL) |     //selecting UCSRC (NOT UBRRH)
+	    (1 << UCSZ0) |      //setting as 8 bits
+	    (1 << UCSZ1);
+	UBRRL = 103;
+}
+
+void uart_send(uint8_t data)
+{
+	while(!(UCSRA & (1 << UDRE)));
+	UDR = data;
+}
+
+uint8_t buffer[5];
+const uint8_t data[5] = {0x01,0x42,0,0,0};
+
 void main()
 {
+	uart_init();
+	PSX_PinsInit();
 	while(1)
 	{
+		PSX_TransRecieveBlock((uint8_t *)data, buffer, 5);
+		uart_send(buffer[0]);
+		uart_send(buffer[1]);
+		uart_send(buffer[2]);
+		uart_send(buffer[3]);
+		uart_send(buffer[4]);
+		_delay_ms(300);
 	}
 }

@@ -1,10 +1,12 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
+#include "stdint-gcc.h"
+
 //constants
 #define BATTERY_VREF 2.56
-#define BATTERY_ADC_VMAX 2.1 //this voltage is through the voltage divider
-#define BATTERY_ADC_VMIN 1.4 //this voltage is through the voltage divider
+#define BATTERY_ADC_VMAX 800 //2V * 2 = 4V
+#define BATTERY_ADC_VMIN 540 //1.35V * 2 = 2.7V
 #define BATTERY_ADC_CHANNEL 0
 #define BATTERY_ADC_SAMPLES 10
 

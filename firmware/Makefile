@@ -3,7 +3,8 @@ MMCU = atmega8
 CFLAGS = -I. -I/usr/avr/include/ -Os -mmcu=$(MMCU)a
 
 SRC = main.c \
-psx_controller.c
+psx_controller.c \
+battery.c
 
 all: main.hex
 

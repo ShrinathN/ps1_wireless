@@ -1,5 +1,4 @@
-#include "psx_controller.h"
-#include "avr/io.h"
+#include "main.h"
 
 void PSX_PinsInit()
 {
@@ -20,70 +19,36 @@ void PSX_PinsInit()
 	PSX_DATA_PORT |= (1 << PSX_DATA_BIT);
 }
 
-uint8_t PSX_TransRecieveByte(uint8_t data)
-{
-	uint8_t received_byte = 0;
-	//setting ATT low, thus starting session
-	PSX_ATT_LOW;
-	//waiting for mandatory ATT delay
-	PSX_DELAY_US(PSX_ATT_DELAY_US);
-	for(uint8_t i = 0; i < 8; i++)
-	{
-		//setting CMD line low or high according to data
-		(data & (1 << i)) ? PSX_CMD_HIGH : PSX_CMD_LOW;
-		//clock low for first part
-		PSX_CLK_LOW;
-		PSX_DELAY_US(PSX_DELAY_CLK_PRE_SAMPLE_US);
-		//sampling before second part
-		received_byte |= PSX_READ_DATA << i;
-		//waiting for second part
-		PSX_DELAY_US(PSX_DELAY_CLK_POST_SAMPLE_US);
-		//setting clock high for sum of both parts
-		PSX_CLK_HIGH;
-		PSX_DELAY_US(PSX_DELAY_CLK_PRE_SAMPLE_US + PSX_DELAY_CLK_POST_SAMPLE_US);
-	}
-	//waiting for ACK, optional I guess
-	PSX_WAIT_ACK;
-	//setting ATT low, thus ending session
-	PSX_ATT_HIGH;
-	PSX_DELAY_US(PSX_ATT_DELAY_US);
-}
 
 void PSX_TransRecieveBlock(uint8_t * transmit_block, uint8_t * recieve_block, uint8_t length)
 {
-	uint8_t byte_counter = 0;
+	uint8_t byte_offset, bit_offset;
 
-	//setting ATT low, thus starting session
 	PSX_ATT_LOW;
-	//waiting for mandatory ATT delay
-	PSX_DELAY_US(PSX_ATT_DELAY_US);
+	PSX_CMD_HIGH;
+	PSX_CLK_HIGH;
 
-	for(uint8_t byte_counter = 0; byte_counter < length; byte_counter++)
+	for(byte_offset = 0; byte_offset < length; byte_offset++)
 	{
-		for(uint8_t i = 0, recieve_block[byte_counter] = 0; i < 8; i++)
+		recieve_block[byte_offset] = 0;
+		for(bit_offset = 0; bit_offset < 8; bit_offset++)
 		{
-			//setting CMD line low or high according to data
-			(transmit_block[byte_counter] & (1 << i)) ? PSX_CMD_HIGH : PSX_CMD_LOW;
-			//clock low for first part
+			if(transmit_block[byte_offset] & (1 << bit_offset) != 0) PSX_CMD_HIGH;
+			else PSX_CMD_LOW;
 			PSX_CLK_LOW;
-			PSX_DELAY_US(PSX_DELAY_CLK_PRE_SAMPLE_US);
-			//sampling before second part
-			recieve_block[byte_counter] |= PSX_READ_DATA << i;
-			//waiting for second part
-			PSX_DELAY_US(PSX_DELAY_CLK_POST_SAMPLE_US);
-			//setting clock high for sum of both parts
+			PSX_DELAY_US(PSX_DELAY_CLK_US);
 			PSX_CLK_HIGH;
-			PSX_DELAY_US(PSX_DELAY_CLK_PRE_SAMPLE_US + PSX_DELAY_CLK_POST_SAMPLE_US);
+			recieve_block[byte_offset] |= ((PSX_READ_DATA) << bit_offset);
+			PSX_DELAY_US(PSX_DELAY_CLK_US);
 		}
-		//waiting for ACK, optional I guess
-		PSX_WAIT_ACK;
+		PSX_CLK_HIGH;
+		PSX_CMD_HIGH;
+		// if(byte_offset != length - 1)
+			// PSX_WAIT_ACK;
+		PSX_DELAY_US(PSX_INTER_BYTE_DELAY_US);
 	}
 
+	PSX_CMD_HIGH;
+	PSX_CLK_HIGH;
 	PSX_ATT_HIGH;
-	PSX_DELAY_US(PSX_ATT_DELAY_US);
-}
-
-uint8_t PSX_GetControllerType()
-{
-	return PSX_TransRecieveByte(0x01);
 }

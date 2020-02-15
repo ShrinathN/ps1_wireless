@@ -1,11 +1,11 @@
 #ifndef PSX_CONTROLLER_H
 #define PSX_CONTROLLER_H
+#include "stdint-gcc.h"
 
 //constants
-#define PSX_DELAY_CLK_PRE_SAMPLE_US 9
-#define PSX_DELAY_CLK_POST_SAMPLE_US 1
-#define PSX_ATT_DELAY_US 10
-#define PSX_INTER_BYTE_DELAY_US 10
+#define PSX_DELAY_CLK_US 4
+#define PSX_ATT_DELAY_US 8
+#define PSX_INTER_BYTE_DELAY_US 20
 
 //pin definitions
 #define PSX_ATT_DDR DDRC
@@ -47,12 +47,11 @@ enum
 	PSX_TYPE_DIGITAL = 0x41,
 	PSX_TYPE_NEGCON = 0x23,
 	PSX_TYPE_ANALOGUE_RED_LED = 0x73,
-	PSX_TYPE_ANALOGUE_RED_LED = 0x53
+	PSX_TYPE_ANALOGUE_GREEN_LED = 0x53
 };
 
 //function declarations
 void PSX_PinsInit();
-uint8_t PSX_TransRecieveByte(__UINT8_TYPE__ data);
 void PSX_TransRecieveBlock(uint8_t * transmit_block, uint8_t * recieve_block, uint8_t length);
 
 #endif
