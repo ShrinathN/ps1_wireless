@@ -33,8 +33,14 @@ void PSX_TransRecieveBlock(uint8_t * transmit_block, uint8_t * recieve_block, ui
 		recieve_block[byte_offset] = 0;
 		for(bit_offset = 0; bit_offset < 8; bit_offset++)
 		{
-			if(transmit_block[byte_offset] & (1 << bit_offset) != 0) PSX_CMD_HIGH;
-			else PSX_CMD_LOW;
+			if(transmit_block[byte_offset] & (1 << bit_offset))
+			{
+				PSX_CMD_HIGH;
+			}
+			else
+			{
+				PSX_CMD_LOW;
+			}
 			PSX_CLK_LOW;
 			PSX_DELAY_US(PSX_DELAY_CLK_US);
 			PSX_CLK_HIGH;

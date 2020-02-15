@@ -3,8 +3,8 @@
 #include "stdint-gcc.h"
 
 //constants
-#define PSX_DELAY_CLK_US 4
-#define PSX_ATT_DELAY_US 8
+#define PSX_DELAY_CLK_US 10
+#define PSX_ATT_DELAY_US 20
 #define PSX_INTER_BYTE_DELAY_US 20
 
 //pin definitions
