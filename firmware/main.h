@@ -5,3 +5,4 @@
 #include <avr/interrupt.h>
 
 #include "psx_controller.h"
+#include "battery.h"

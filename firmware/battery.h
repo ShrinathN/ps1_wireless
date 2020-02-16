@@ -5,9 +5,9 @@
 
 //constants
 #define BATTERY_VREF 2.56
-#define BATTERY_ADC_VMAX 800 //2V * 2 = 4V
-#define BATTERY_ADC_VMIN 540 //1.35V * 2 = 2.7V
-#define BATTERY_ADC_CHANNEL 0
+#define BATTERY_ADC_VMAX 4.0
+#define BATTERY_ADC_VMIN 2.7
+#define BATTERY_ADC_BANDGAP_VOLTAGE 1.3
 #define BATTERY_ADC_SAMPLES 10
 
 //macros
@@ -17,5 +17,6 @@
 
 void BATTERY_AdcInit();
 uint8_t BATTERY_GetPercentage();
+uint16_t BATTERY_GetAdcRaw();
 
 #endif
