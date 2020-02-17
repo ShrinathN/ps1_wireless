@@ -17,7 +17,10 @@ void uart_send(uint8_t data)
 
 uint8_t buffer[5];
 const uint8_t data[5] = {0x01,0x42,0,0,0};
-
+uint32_t v;
+uint8_t * ptr;
+uint32_t d;
+uint8_t pct;
 
 void main()
 {
@@ -26,7 +29,20 @@ void main()
 	PSX_PinsInit();
 	while(1)
 	{
-		uart_send(BATTERY_GetPercentage());
+		v = (uint32_t)((133120) / BATTERY_GetAdcRaw());
+		ptr = (uint8_t *)&v;
+		uart_send(ptr[0]);
+		uart_send(ptr[1]);
+		uart_send(ptr[2]);
+		uart_send(ptr[3]);
+		d = ((v - BATTERY_ADC_VMIN) * 100) / (BATTERY_ADC_VMAX - BATTERY_ADC_VMIN);
+		pct = (uint8_t)d;
+		uart_send(pct);
+
+		pct = 0;
+		d = 0;
+		v = 0;
+		ptr = NULL;
 		_delay_ms(500);
 	}
 }

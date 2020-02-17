@@ -1,5 +1,4 @@
 #include "battery.h"
-#include "avr/io.h"
 
 
 void BATTERY_AdcInit()
@@ -17,23 +16,20 @@ void BATTERY_AdcInit()
 */
 uint8_t BATTERY_GetPercentage()
 {
-	uint32_t voltage_accumulator;
+	uint32_t voltage_accumulator, voltage_real, voltage_percentage;
 	for(uint8_t i = 0, voltage_accumulator = 0; i < BATTERY_ADC_SAMPLES; i++)
 	{
-		ADC_START_CONVERSION;
-		ADC_WAIT;
-		voltage_accumulator += ADC_SAMPLE;
+		voltage_accumulator += BATTERY_GetAdcRaw();
 	}
 	voltage_accumulator /= BATTERY_ADC_SAMPLES;
-	float battery_voltage = (BATTERY_ADC_BANDGAP_VOLTAGE * 1024) / voltage_accumulator;
-	float float_percent = ((battery_voltage - BATTERY_ADC_VMIN) / (BATTERY_ADC_VMAX - BATTERY_ADC_VMIN));
-	float_percent *= 100;
-	return (uint8_t)(float_percent);
+	voltage_real = ((133120) / BATTERY_GetAdcRaw()); //(1024 * 1.3) * 100, 100 is only for convenience
+	voltage_percentage = ((voltage_real - BATTERY_ADC_VMIN) * 100) / (BATTERY_ADC_VMAX - BATTERY_ADC_VMIN);
+	return (uint8_t)voltage_percentage;
 }
 
 uint16_t BATTERY_GetAdcRaw()
 {
 	ADC_START_CONVERSION;
 	ADC_WAIT;
-	return (uint16_t)(ADC_SAMPLE);
+	return ADC_SAMPLE;
 }

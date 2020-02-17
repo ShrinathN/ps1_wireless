@@ -2,7 +2,9 @@
 	"files.associations": {
 		"psx_controller.h": "c",
 		"battery.h": "c",
-		"main.h": "c"
+		"main.h": "c",
+		"math.h": "c",
+		"filekax.h": "c"
 	},
 	"C_Cpp.default.includePath": ["/usr/avr/include/"]
 }
