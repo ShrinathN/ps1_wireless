@@ -11,7 +11,7 @@ void BATTERY_AdcInit()
 /*
  * Will return the battery percentage
  *
- * Simple voltage measurement, will return a value between 0 to 100 for 2.7V to 4.0V respectively
+ * Simple voltage measurement, will return a value between 0 to 100 for 2.8V to 4.0V respectively
  * @return (uint8_t)the battery voltage in a range of 0 to 100
 */
 uint8_t BATTERY_GetPercentage()

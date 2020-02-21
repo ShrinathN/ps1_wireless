@@ -4,13 +4,23 @@
 #include "main.h"
 
 //pin definitions
-#define NRF_CSN_DDR DDRB
-#define NRF_CSN_PORT PORTB
-#define NRF_CSN_BIT PB2
+//CE pin
+#define NRF_CE_DDR DDRB
+#define NRF_CE_PORT PORTB
+#define NRF_CE_BIT PB1
+//IRQ pin
+#define NRF_IRQ_DDR DDRD
+#define NRF_IRQ_PORT PORTD
+#define NRF_IRQ_PIN PIND
+#define NRF_IRQ_BIT PD2
 
 //macros
-#define CSN_HIGH SPI_SS_HIGH
-#define CSN_LOW SPI_SS_LOW
+#define NRF_CSN_HIGH SPI_SS_HIGH
+#define NRF_CSN_LOW SPI_SS_LOW
+#define NRF_CE_HIGH NRF_CE_PORT |= (1 << NRF_CE_BIT)
+#define NRF_CE_LOW NRF_CE_PORT &= ~(1 << NRF_CE_BIT)
+#define NRF_IRQ_WAIT while(NRF_IRQ_PIN & (1 << NRF_IRQ_BIT))
+#define NRF_DELAY_US(x) _delay_us(x)
 
 //register names
 enum
@@ -187,5 +197,6 @@ void NRF_ReadRxFIFO(uint8_t * ptr, uint8_t length);
 void NRF_SetAddressTx(uint8_t * ptr, uint8_t length);
 void NRF_SetMode(uint8_t mode);
 void NRF_Init();
+void NRF_Execute();
 
 #endif

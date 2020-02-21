@@ -28,7 +28,7 @@ void SPI_Transmit(uint8_t * data, uint8_t length)
 	}
 }
 
-void SPI_Recieve(uint8_t * buffer, uint8_t length)
+void SPI_Receive(uint8_t * buffer, uint8_t length)
 {
 	uint8_t counter = UINT8_MAX;
 	for(counter = 0; counter < length; counter++)
@@ -39,7 +39,7 @@ void SPI_Recieve(uint8_t * buffer, uint8_t length)
 	}
 }
 
-void SPI_TransRecieve(uint8_t * data, uint8_t * buffer, uint8_t length)
+void SPI_TransReceive(uint8_t * data, uint8_t * buffer, uint8_t length)
 {
 	uint8_t counter = UINT8_MAX;
 	for(counter = 0; counter < length; counter++)
