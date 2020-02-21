@@ -52,19 +52,26 @@ void NRF_SetMode(uint8_t mode)
 {
 	uint8_t config_reg = NRF_ReadRegister(REG_CONFIG);
 	if(mode == CONFIG_PWR_UP_UP)
+	{
 		config_reg |= CONFIG_PWR_UP_UP;
+	}
 	else
+	{
 		config_reg &= ~(CONFIG_PWR_UP_UP);
+	}
 	NRF_WriteRegister(REG_CONFIG, config_reg);
 }
 
 void NRF_Init()
 {
-	NRF_CSN_HIGH; //pulling SS high
+	//setting CE as output, and low
+	NRF_CE_DDR |= (1 << NRF_CE_BIT);
 	NRF_CE_LOW; //putting CE low
+
+	NRF_CSN_HIGH; //pulling SS high
 	//setting IRQ as input, and enabling pullup
 	NRF_IRQ_DDR &= ~(1 << NRF_IRQ_BIT);
-	NRF_IRQ_PORT |= (1 << NRF_IRQ_BIT);
+	// NRF_IRQ_PORT |= (1 << NRF_IRQ_BIT);
 	NRF_WriteRegister(REG_CONFIG, 0b01010000);
 	NRF_WriteRegister(REG_EN_AA, 0b00000000);
 	NRF_WriteRegister(REG_EN_RXADDR, 0b0);
@@ -77,6 +84,14 @@ void NRF_Init()
 void NRF_Execute()
 {
 	NRF_CE_HIGH;
-	NRF_DELAY_US(100);
+	NRF_DELAY_MS(1);
 	NRF_CE_LOW;
+}
+
+void NRF_FlushTxBuffer()
+{
+	//1110 0001
+	NRF_CSN_LOW;
+	SPI_Transmit((uint8_t[]){0b11100001}, 1);
+	NRF_CSN_HIGH;
 }

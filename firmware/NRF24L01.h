@@ -19,8 +19,9 @@
 #define NRF_CSN_LOW SPI_SS_LOW
 #define NRF_CE_HIGH NRF_CE_PORT |= (1 << NRF_CE_BIT)
 #define NRF_CE_LOW NRF_CE_PORT &= ~(1 << NRF_CE_BIT)
-#define NRF_IRQ_WAIT while(NRF_IRQ_PIN & (1 << NRF_IRQ_BIT))
+#define NRF_IRQ_WAIT while((NRF_IRQ_PIN & (1 << NRF_IRQ_BIT)) != 0){}
 #define NRF_DELAY_US(x) _delay_us(x)
+#define NRF_DELAY_MS(x) _delay_ms(x)
 
 //register names
 enum
@@ -198,5 +199,6 @@ void NRF_SetAddressTx(uint8_t * ptr, uint8_t length);
 void NRF_SetMode(uint8_t mode);
 void NRF_Init();
 void NRF_Execute();
+void NRF_FlushTxBuffer();
 
 #endif
