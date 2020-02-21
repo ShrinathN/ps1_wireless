@@ -1,6 +1,6 @@
 #ifndef PSX_CONTROLLER_H
 #define PSX_CONTROLLER_H
-#include "stdint-gcc.h"
+#include "main.h"
 
 //constants
 #define PSX_DELAY_CLK_US 10

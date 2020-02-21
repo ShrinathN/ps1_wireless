@@ -4,7 +4,11 @@
 		"battery.h": "c",
 		"main.h": "c",
 		"math.h": "c",
-		"filekax.h": "c"
+		"filekax.h": "c",
+		"string_view": "c",
+		"tuple": "c",
+		"nrf24l01.h": "c",
+		"spi.h": "c"
 	},
 	"C_Cpp.default.includePath": ["/usr/avr/include/"]
 }

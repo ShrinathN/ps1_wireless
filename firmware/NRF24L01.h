@@ -1,0 +1,191 @@
+#ifndef NRF24L01_H
+#define NRF24L01_H
+
+#include "main.h"
+
+//pin definitions
+#define NRF_CSN_DDR DDRB
+#define NRF_CSN_PORT PORTB
+#define NRF_CSN_BIT PB2
+
+//macros
+#define CSN_HIGH SPI_SS_HIGH
+#define CSN_LOW SPI_SS_LOW
+
+//register names
+enum
+{
+	REG_CONFIG = 0x0,
+	REG_EN_AA,
+	REG_EN_RXADDR,
+	REG_SETUP_AW,
+	REG_SETUP_RETR,
+	REG_RF_CH,
+	REG_RF_SETUP,
+	REG_STATUS,
+	REG_OBSERVE_TX,
+	REG_RPD,
+	REG_RX_ADDR_P0,
+	REG_RX_ADDR_P1,
+	REG_RX_ADDR_P2,
+	REG_RX_ADDR_P3,
+	REG_RX_ADDR_P4,
+	REG_RX_ADDR_P5,
+	REG_TX_ADDR,
+	REG_RX_PW_P0,
+	REG_RX_PW_P1,
+	REG_RX_PW_P2,
+	REG_RX_PW_P3,
+	REG_RX_PW_P4,
+	REG_RX_PW_P5,
+	REG_FIFO_STATUS,
+	REG_DYNPD = 0x1c,
+	REG_FEATURE
+};
+
+//register 0x0
+enum
+{
+	CONFIG_MASK_RX_DR_ON = 0x0,
+	CONFIG_MASK_RX_DR_OFF = 0x40
+};
+
+enum
+{
+	CONFIG_MASK_TX_DS_ON = 0x0,
+	CONFIG_MASK_TX_DS_OFF = 0x20
+};
+
+enum
+{
+	CONFIG_MASK_MAX_RT_ON = 0x0,
+	CONFIG_MASK_MAX_RT_OFF = 0x10
+};
+
+enum
+{
+	CONFIG_EN_CRC_LOW = 0x0,
+	CONFIG_EN_CRC_HIGH = 0x8
+};
+
+enum
+{
+	CONFIG_CRCO_ONE_BYTE = 0x0,
+	CONFIG_CRCO_TWO_BYTE = 0x4
+};
+
+enum
+{
+	CONFIG_PWR_UP_DOWN = 0x0,
+	CONFIG_PWR_UP_UP = 0x2
+};
+
+enum
+{
+	CONFIG_PRIM_RX_PTX = 0x0,
+	CONFIG_PRIM_RX_PRX = 0x1
+};
+
+//register 0x1
+enum
+{
+	EN_AA_ENAA_P5_ENABLE = 0x20,
+	EN_AA_ENAA_P4_ENABLE = 0x10,
+	EN_AA_ENAA_P3_ENABLE = 0x8,
+	EN_AA_ENAA_P2_ENABLE = 0x4,
+	EN_AA_ENAA_P1_ENABLE = 0x2,
+	EN_AA_ENAA_P0_ENABLE = 0x1
+};
+
+//register 0x2
+enum
+{
+	EN_RXADDR_ERX_P5_ENABLE = 0x20,
+	EN_RXADDR_ERX_P4_ENABLE = 0x10,
+	EN_RXADDR_ERX_P3_ENABLE = 0x8,
+	EN_RXADDR_ERX_P2_ENABLE = 0x4,
+	EN_RXADDR_ERX_P1_ENABLE = 0x2,
+	EN_RXADDR_ERX_P0_ENABLE = 0x1
+};
+
+//register 0x3
+enum
+{
+	SETUP_AW_AW_3_BYTES = 0x1,
+	SETUP_AW_AW_4_BYTES = 0x2,
+	SETUP_AW_AW_5_BYTES = 0x3
+};
+
+//register 0x4
+enum
+{
+	SETUP_RETR_ARD_250US = 0x0,
+	SETUP_RETR_ARD_500US = 0x10,
+	SETUP_RETR_ARD_750US = 0x20,
+	SETUP_RETR_ARD_1000US = 0x30,
+	SETUP_RETR_ARD_1250US = 0x40,
+	SETUP_RETR_ARD_1500US = 0x50,
+	SETUP_RETR_ARD_1750US = 0x60,
+	SETUP_RETR_ARD_2000US = 0x70,
+	SETUP_RETR_ARD_2250US = 0x80,
+	SETUP_RETR_ARD_2500US = 0x90,
+	SETUP_RETR_ARD_2750US = 0xa0,
+	SETUP_RETR_ARD_3000US = 0xb0,
+	SETUP_RETR_ARD_3250US = 0xc0,
+	SETUP_RETR_ARD_3500US = 0xd0,
+	SETUP_RETR_ARD_3750US = 0xe0,
+	SETUP_RETR_ARD_4000US = 0xf0
+};
+
+enum
+{
+	SETUP_RETR_ARC_0 = 0x0,
+	SETUP_RETR_ARC_1 = 0x1,
+	SETUP_RETR_ARC_2 = 0x2,
+	SETUP_RETR_ARC_3 = 0x3,
+	SETUP_RETR_ARC_4 = 0x4,
+	SETUP_RETR_ARC_5 = 0x5,
+	SETUP_RETR_ARC_6 = 0x6,
+	SETUP_RETR_ARC_7 = 0x7,
+	SETUP_RETR_ARC_8 = 0x8,
+	SETUP_RETR_ARC_9 = 0x9,
+	SETUP_RETR_ARC_10 = 0xa,
+	SETUP_RETR_ARC_11 = 0xb,
+	SETUP_RETR_ARC_12 = 0xc,
+	SETUP_RETR_ARC_13 = 0xd,
+	SETUP_RETR_ARC_14 = 0xe,
+	SETUP_RETR_ARC_15 = 0xf
+};
+
+//register 0x6
+enum
+{
+	RF_SETUP_CONT_WAVE = 0x80,
+	RF_SETUP_PLL_LOCK = 0x10,
+	RF_SETUP_DR_1MBPS = 0x0,
+	RF_SETUP_DR_2MBPS = 0x8,
+	RF_SETUP_DR_250KBPS = 0x20,
+	RF_SETUP_RF_PWR_M18DBM = 0x0,
+	RF_SETUP_RF_PWR_M12DBM = 0x2,
+	RF_SETUP_RF_PWR_M6DBM = 0x4,
+	RF_SETUP_RF_PWR_P0DBM = 0x6,
+};
+
+//register 0x7
+enum
+{
+	STATUS_RX_DR_CLR = 0x40,
+	STATUS_TX_DS_CLR = 0x20,
+	STATUS_MAX_RT_CLR = 0x10
+};
+
+//function declarations
+uint8_t NRF_ReadRegister(uint8_t regstr);
+void NRF_WriteRegister(uint8_t regstr, uint8_t data);
+void NRF_WriteTxFIFO(uint8_t *data, uint8_t length);
+void NRF_ReadRxFIFO(uint8_t * ptr, uint8_t length);
+void NRF_SetAddressTx(uint8_t * ptr, uint8_t length);
+void NRF_SetMode(uint8_t mode);
+void NRF_Init();
+
+#endif

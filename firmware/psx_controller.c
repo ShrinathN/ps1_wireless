@@ -1,4 +1,5 @@
-#include "main.h"
+#include "psx_controller.h"
+
 
 void PSX_PinsInit()
 {

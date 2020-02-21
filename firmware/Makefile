@@ -4,7 +4,9 @@ CFLAGS = -I. -I/usr/avr/include/ -Os -mmcu=$(MMCU)a
 
 SRC = main.c \
 psx_controller.c \
-battery.c
+battery.c \
+spi.c \
+NRF24L01.c
 
 all: main.hex
 

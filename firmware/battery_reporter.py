@@ -4,29 +4,48 @@ import serial
 import tkinter as tk
 import threading
 import time
+import pandas as pd
+import numpy as np
 
 FONT_SIZE = 60
+
+# f = open('output.csv','w')
+# f.write(',adc,raw,percent,timestamp')
+# f.close()
+
+adc = []
+raw = []
+per = []
+t = []
 
 def data_reader():
 	while(True):
 		try:
+			# f = open('output.csv','a')
 			data = 0
 			adc_data = 0
 			per_data = 0
 
-			data = term.read(5)
-			adc_data = (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24)
-			text_adc_data['text'] = str(adc_data / 100)
-			text_raw_data['text'] = str(133120 // adc_data) + '/ 1024'
+			data = term.read(3)
 
-			per_data = (data[4])
-			text_per_data['text'] = str(per_data)
+			text_adc_data['text'] = str(round( (1.3*1024)/((data[0] << 0) | (data[1] << 8)),2))
+			text_raw_data['text'] = str((data[0] << 0) | (data[1] << 8))
+			text_per_data['text'] = str(data[2]) + '%'
 
 			text_timestamp['text'] = time.ctime()
+			# f.write(text_adc_data['text'] + ',' +
+			# text_raw_data['text'] + ',' +
+			# text_per_data['text'] +',' +
+			# text_timestamp['text'])
+			adc.append(text_adc_data['text'])
+			raw.append(text_raw_data['text'])
+			per.append(text_per_data['text'])
+			t.append(text_timestamp['text'])
+
+			# f.close()
+
 		except:
 			continue
-
-
 
 
 term = serial.Serial('/dev/ttyUSB0', baudrate=9600)
@@ -52,3 +71,11 @@ text_timestamp.grid(row=3, column=1)
 threading.Thread(target=data_reader, args=()).start()
 
 root.mainloop()
+
+df = pd.DataFrame({
+	'adc' : adc,
+	'raw' : raw,
+	'percentage' : per,
+	'timestamp' : t
+})
+df.to_csv('output.csv')
