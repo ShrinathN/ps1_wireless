@@ -40,28 +40,28 @@ void main()
 	_delay_ms(2);
 
 	loop_run_count = 0;
-	uart_send(NRF_ReadRegister(REG_CONFIG));
+	// uart_send(NRF_ReadRegister(REG_CONFIG));
 	while(1)
 	{
 		PSX_TransRecieveBlock((uint8_t *)psx_poll_request, recieve_block, 5);
 		if((recieve_block[3] != old_data[0]) || (recieve_block[4] != old_data[1]))
 		{
-			PORTB |= 1;
+			// PORTB |= 1;
 			old_data[0] = recieve_block[3];
 			old_data[1] = recieve_block[4];
 			NRF_FlushTxBuffer();
 			NRF_WriteTxFIFO(old_data, 3);
-			uart_send(NRF_ReadRegister(REG_STATUS));
-			uart_send(NRF_ReadRegister(REG_FIFO_STATUS));
+			// uart_send(NRF_ReadRegister(REG_STATUS));
+			// uart_send(NRF_ReadRegister(REG_FIFO_STATUS));
 			NRF_Execute();
 			NRF_IRQ_WAIT;
-			_delay_ms(10);
-			uart_send(NRF_ReadRegister(REG_STATUS));
-			uart_send(NRF_ReadRegister(REG_FIFO_STATUS));
+			// _delay_ms(10);
+			// uart_send(NRF_ReadRegister(REG_STATUS));
+			// uart_send(NRF_ReadRegister(REG_FIFO_STATUS));
 			//clearing status
 			NRF_WriteRegister(REG_STATUS, NRF_ReadRegister(REG_STATUS)  & 0b01111111);
-			_delay_ms(10);
-			PORTB &= ~1;
+			// _delay_ms(10);
+			// PORTB &= ~1;
 		}
 		if(loop_run_count++ == BATTERY_SAMPLE_TIMER_THRESHOLD)
 		{

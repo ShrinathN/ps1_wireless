@@ -84,7 +84,7 @@ void NRF_Init()
 void NRF_Execute()
 {
 	NRF_CE_HIGH;
-	NRF_DELAY_MS(1);
+	NRF_DELAY_US(20);
 	NRF_CE_LOW;
 }
 
