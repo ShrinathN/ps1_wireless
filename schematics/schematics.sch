@@ -24,36 +24,6 @@ F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/Microchip%208bit%20mcu%20AV
 	1    4450 3300
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:R R2
-U 1 1 5E43C370
-P 6500 1050
-F 0 "R2" H 6600 1050 50  0000 L CNN
-F 1 "220k" H 6600 950 50  0000 L CNN
-F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 6430 1050 50  0001 C CNN
-F 3 "~" H 6500 1050 50  0001 C CNN
-	1    6500 1050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R3
-U 1 1 5E43D361
-P 6500 1350
-F 0 "R3" H 6600 1350 50  0000 L CNN
-F 1 "220k" H 6600 1250 50  0000 L CNN
-F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 6430 1350 50  0001 C CNN
-F 3 "~" H 6500 1350 50  0001 C CNN
-	1    6500 1350
-	1    0    0    -1  
-$EndComp
-Text Label 6500 1200 2    50   ~ 0
-ADC_IN
-Text Label 5050 2900 0    50   ~ 0
-ADC_IN
-Text Label 6500 900  0    50   ~ 0
-BATTERY_IN
-Text Label 6500 1500 3    50   ~ 0
-GND
 Text Label 4550 4700 3    50   ~ 0
 GND
 Text Label 4450 4700 3    50   ~ 0
@@ -76,7 +46,7 @@ L Connector:Conn_01x07_Female J2
 U 1 1 5E43FDC9
 P 7150 3700
 F 0 "J2" H 7178 3726 50  0000 L CNN
-F 1 "Conn_01x07_Female" H 7178 3635 50  0000 L CNN
+F 1 "PSX_CONNECTOR" H 7178 3635 50  0000 L CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical" H 7150 3700 50  0001 C CNN
 F 3 "~" H 7150 3700 50  0001 C CNN
 	1    7150 3700
@@ -107,7 +77,7 @@ L RF:NRF24L01_Breakout U3
 U 1 1 5E443B20
 P 8750 2700
 F 0 "U3" H 9130 2746 50  0000 L CNN
-F 1 "NRF24L01_Breakout" H 9130 2655 50  0000 L CNN
+F 1 "NRF24L01_BREAKOUT" H 9130 2655 50  0000 L CNN
 F 2 "RF_Module:nRF24L01_Breakout" H 8900 3300 50  0001 L CIN
 F 3 "http://www.nordicsemi.com/eng/content/download/2730/34105/file/nRF24L01_Product_Specification_v2_0.pdf" H 8750 2600 50  0001 C CNN
 	1    8750 2700
@@ -179,8 +149,8 @@ L Connector_Generic:Conn_01x02 J1
 U 1 1 5E43D109
 P 5850 4300
 F 0 "J1" H 5930 4292 50  0000 L CNN
-F 1 "Conn_01x02" H 5930 4201 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x02_P3.81mm_Drill0.8mm" H 5850 4300 50  0001 C CNN
+F 1 "POWER" H 5930 4201 50  0000 L CNN
+F 2 "Connector_PinHeader_2.00mm:PinHeader_1x02_P2.00mm_Vertical" H 5850 4300 50  0001 C CNN
 F 3 "~" H 5850 4300 50  0001 C CNN
 	1    5850 4300
 	1    0    0    -1  
